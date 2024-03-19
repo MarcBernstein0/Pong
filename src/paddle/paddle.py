@@ -23,9 +23,17 @@ class Paddle:
         pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.dimensions[0], self.dimensions[1]))
 
     def move_up(self):
-        self.position[1] -= 1
+        if (not self.__hit_ceiling()):
+            self.position[1] -= 3
     
     def move_down(self):
-        self.position[1] += 1
+        if (not self.__hit_floor()):
+            self.position[1] += 3
 
+    def __hit_ceiling(self) -> bool:
+        return self.position[1] <= 0
+
+    def __hit_floor(self) -> bool:
+        _, height = self.screen.get_size()
+        return self.position[1] >= height - self.dimensions[1]
     
