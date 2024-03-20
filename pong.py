@@ -4,9 +4,13 @@ import pygame
 from src.fps.fps import FPS
 from src.paddle.paddle import Paddle
 
+PADDLE_SPACING = 20
+SCREEN_HEIGHT = 900
+SCREEN_WIDTH = 1080
+
 
 def makeScreen(backgroundColor: pygame.Color, caption: str) -> pygame.Surface:
-    screen = pygame.display.set_mode((1080, 900))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption(caption) 
     screen.fill(backgroundColor)
     pygame.display.flip() 
@@ -17,9 +21,11 @@ def makeScreen(backgroundColor: pygame.Color, caption: str) -> pygame.Surface:
 def main():
     pygame.init()
     fps = FPS()
-    color = pygame.Color("black")
-    screen = makeScreen(color, "PONG")
-    paddle = Paddle(screen, pygame.Color("white"), [20, 900//2])
+    screen_color = pygame.Color("black")
+    screen = makeScreen(screen_color, "PONG")
+    sprites = pygame.sprite.Group()
+    paddle_left = Paddle(screen, pygame.K_w, pygame.K_s, pygame.Color("white"), [PADDLE_SPACING, SCREEN_HEIGHT//2], sprites)
+    paddle_right = Paddle(screen, pygame.K_UP, pygame.K_DOWN, pygame.Color("white"),[SCREEN_WIDTH - (PADDLE_SPACING + 20), int(SCREEN_HEIGHT//1.5)], sprites)
   
     # Variable to keep our game loop running 
     running = True
@@ -27,23 +33,18 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE]:
+            pressed = pygame.key.get_pressed()
+            if pressed[pygame.K_ESCAPE]:
                 running = False
-            if keys[pygame.K_w]:
-                print("w key pressed")
-                paddle.move_up()
-            if keys[pygame.K_s]:
-                print("s key pressed")
-                paddle.move_down()
 
-        screen.fill(color) # Clear the screen
+        screen.fill(screen_color) # Clear the screen
         fps.clock.tick(180)
         fps.render(screen)
-        paddle.draw_paddle()
+        sprites.update()
+        paddle_left.draw_paddle()
+        paddle_right.draw_paddle()
 
- 
+
         pygame.display.update()
 
     print("Quitting game")
