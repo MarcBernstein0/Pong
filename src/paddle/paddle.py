@@ -1,16 +1,16 @@
-from typing import Any
+from typing import List, Tuple
 import pygame
 
 class Paddle(pygame.sprite.Sprite):
     screen: pygame.Surface
     color: pygame.Color
-    position: list[int] # x, y
-    dimensions: tuple[int, int] # Width, Height
+    position: List[int] # x, y
+    dimensions: Tuple[int, int] # Width, Height
     width: int # if the paddle is filled or not
     up_key: int
     down_key: int
 
-    def __init__(self, screen: pygame.Surface, up_key: int, down_key: int, color: pygame.Color, position: list[int], grps: pygame.sprite.Group, dimensions: tuple[int, int] = (20, 90), width: int = 0) -> None:
+    def __init__(self, screen: pygame.Surface, up_key: int, down_key: int, color: pygame.Color, position: list[int], grps: pygame.sprite.Group, dimensions: Tuple[int, int] = (20, 90), width: int = 0) -> None:
         super().__init__(grps)
         self.screen = screen
         self.color = color
