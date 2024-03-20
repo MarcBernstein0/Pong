@@ -24,9 +24,28 @@ def main():
     screen_color = pygame.Color("black")
     screen = makeScreen(screen_color, "PONG")
     sprites = pygame.sprite.Group()
-    paddle_left = Paddle(screen, pygame.K_w, pygame.K_s, pygame.Color("white"), [PADDLE_SPACING, SCREEN_HEIGHT//2], sprites)
-    paddle_right = Paddle(screen, pygame.K_UP, pygame.K_DOWN, pygame.Color("white"),[SCREEN_WIDTH - (PADDLE_SPACING + 20), int(SCREEN_HEIGHT//1.5)], sprites)
-    ball = Ball(screen, [SCREEN_HEIGHT//2, SCREEN_WIDTH//2], pygame.Color("white"), 15, sprites)
+    paddle_left = Paddle(
+        screen, 
+        pygame.K_w, 
+        pygame.K_s, 
+        pygame.Color("white"), 
+        [PADDLE_SPACING, SCREEN_HEIGHT//2], 
+        sprites)
+    paddle_right = Paddle(
+        screen, 
+        pygame.K_UP, 
+        pygame.K_DOWN, 
+        pygame.Color("white"),[
+        SCREEN_WIDTH - (PADDLE_SPACING + 20), int(SCREEN_HEIGHT//1.5)], 
+        sprites)
+    ball = Ball(
+        screen, 
+        [SCREEN_HEIGHT//2, SCREEN_WIDTH//2], 
+        pygame.Color("white"), 
+        15, 
+        1,
+        1,
+        sprites)
 
     # Variable to keep our game loop running 
     running = True
