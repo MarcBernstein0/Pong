@@ -31,10 +31,10 @@ class GameLogic:
         ret = False
         width, _ = self.screen.get_size()
         if ball.circle.left == 0:
-            self.score_p1 += 1
+            self.score_p2 += 1
             ret = True
         if ball.circle.right == width:
-            self.score_p2 += 1
+            self.score_p1 += 1
             ret = True
         return ret
     
