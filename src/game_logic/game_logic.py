@@ -34,6 +34,13 @@ class GameLogic:
         if ball.circle.right == width:
             self.score_p2 += 1
     
+    def __draw_score(self):
+        font = pygame.font.Font('freesansbold.ttf', 32)
+        text = font.render("P1: {} - P2: {}".format(self.score_p1, self.score_p2), True, pygame.Color("green"), pygame.Color("blue"))
+        textRect = text.get_rect()
+        textRect.center = (self.screen_width // 2, PADDLE_SPACING)
+        self.screen.blit(text, textRect)
+    
     def game_logic(self):
         fps = FPS()
         paddle_left = Paddle(
@@ -78,6 +85,7 @@ class GameLogic:
             paddle_left.draw_paddle()
             paddle_right.draw_paddle()
             ball.draw_ball()
+            self.__draw_score()
 
             print("game logic", self)
             pygame.display.update()
