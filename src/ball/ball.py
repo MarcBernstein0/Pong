@@ -7,17 +7,17 @@ class Ball(pygame.sprite.Sprite):
     color: pygame.Color
     position: List[int]
     radius: int
-    vel_x: int
-    vel_y: int
+    speed: List[int]
 
-    def __init__(self, screen: pygame.Surface, position: List[int], color: pygame.Color, radius: int, vel_x: int, vel_y: int, *grps: pygame.sprite.Group):
+    def __init__(self, screen: pygame.Surface, position: List[int], color: pygame.Color, radius: int, *grps: pygame.sprite.Group, speed: List[int] = [1,1]):
         super().__init__(*grps)
         self.screen = screen
         self.position = position
-        self.vel_x = vel_x
-        self.vel_y = vel_y
         self.color = color
         self.radius = radius
+        self.speed = speed
+        self.circle = pygame.draw.circle(self.screen, self.color, self.position, self.radius)
+
     
     def __str__(self) -> str:
         res = self.__class__.__name__ + '(' + \
@@ -25,14 +25,12 @@ class Ball(pygame.sprite.Sprite):
         return res
     
     def draw_ball(self):
-        print(self.position)
-        pygame.draw.circle(self.screen, self.color, self.position, self.radius)
+        pygame.draw.circle(self.screen, self.color, self.circle.center, self.radius)
     
     def update(self):
-        height, width = self.screen.get_size()
-        if (self.position[1] == 0 or self.position[1] == height):
-            self.vel_x *= -1
-        if (self.position[0] == 0 or self.position[0] == width):
-            self.vel_y *= -1
-        self.position[0] += self.vel_x
-        self.position[1] += self.vel_y
+        self.circle.move_ip(self.speed)
+        width, height = self.screen.get_size()
+        if self.circle.left <= 0 or self.circle.right >= width:
+            self.speed[0] *= -1
+        if self.circle.top <= 0 or self.circle.bottom >= height:
+            self.speed[1] *= -1

@@ -43,8 +43,6 @@ def main():
         [SCREEN_HEIGHT//2, SCREEN_WIDTH//2], 
         pygame.Color("white"), 
         15, 
-        1,
-        1,
         sprites)
 
     # Variable to keep our game loop running 

@@ -19,6 +19,7 @@ class Paddle(pygame.sprite.Sprite):
         self.width = width
         self.up_key = up_key
         self.down_key = down_key
+        self.rect = pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.dimensions[0], self.dimensions[1]))
 
     def __str__(self) -> str:
         res = self.__class__.__name__ + '(' + \
@@ -26,7 +27,7 @@ class Paddle(pygame.sprite.Sprite):
         return res
 
     def draw_paddle(self):
-        pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.dimensions[0], self.dimensions[1]))
+        pygame.draw.rect(self.screen, self.color, self.rect)
 
 
     def update(self):
@@ -37,17 +38,10 @@ class Paddle(pygame.sprite.Sprite):
             self.__move_down()
 
     def __move_up(self):
-        if (not self.__hit_ceiling()):
-            self.position[1] -= 1
+        if (not self.rect.top <= 0):
+            self.rect.move_ip(0, -1)
     
     def __move_down(self):
-        if (not self.__hit_floor()):
-            self.position[1] += 1
-
-    def __hit_ceiling(self) -> bool:
-        return self.position[1] <= 0
-
-    def __hit_floor(self) -> bool:
         _, height = self.screen.get_size()
-        return self.position[1] >= height - self.dimensions[1]
-    
+        if (not self.rect.bottom >= height):
+            self.rect.move_ip(0, 1)
