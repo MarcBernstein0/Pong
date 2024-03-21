@@ -27,16 +27,20 @@ class GameLogic:
             ', '.join('%s=%s' % item for item in vars(self).items()) + ')'
         return res
 
-    def __scored(self, ball: Ball):
+    def __scored(self, ball: Ball) -> bool:
+        ret = False
         width, _ = self.screen.get_size()
         if ball.circle.left == 0:
             self.score_p1 += 1
+            ret = True
         if ball.circle.right == width:
             self.score_p2 += 1
+            ret = True
+        return ret
     
     def __draw_score(self):
-        font = pygame.font.Font('freesansbold.ttf', 32)
-        text = font.render("P1: {} - P2: {}".format(self.score_p1, self.score_p2), True, pygame.Color("green"), pygame.Color("blue"))
+        font = pygame.font.Font("freesansbold.ttf", 32)
+        text = font.render("P1: {} - P2: {}".format(self.score_p1, self.score_p2), True, pygame.Color("white"))
         textRect = text.get_rect()
         textRect.center = (self.screen_width // 2, PADDLE_SPACING)
         self.screen.blit(text, textRect)
@@ -79,15 +83,16 @@ class GameLogic:
             paddle_left.update()
             paddle_right.update()
             ball.update(paddle_left, paddle_right)
-            self.__scored(ball)
-            if self.score_p1 == 3 or self.score_p2 == 3:
+            should_reset = self.__scored(ball)
+            if should_reset:
+                ball.circle.center = (self.screen_height//2, self.screen_height//2)
+            if self.score_p1 == 2 or self.score_p2 == 2:
                 running = False
             paddle_left.draw_paddle()
             paddle_right.draw_paddle()
             ball.draw_ball()
             self.__draw_score()
 
-            print("game logic", self)
             pygame.display.update()
 
         print("Quitting game")
