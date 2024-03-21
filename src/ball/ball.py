@@ -9,8 +9,7 @@ class Ball(pygame.sprite.Sprite):
     radius: int
     speed: List[int]
 
-    def __init__(self, screen: pygame.Surface, position: List[int], color: pygame.Color, radius: int, *grps: pygame.sprite.Group, speed: List[int] = [1,1]):
-        super().__init__(*grps)
+    def __init__(self, screen: pygame.Surface, position: List[int], color: pygame.Color, radius: int, speed: List[int] = [1,1]):
         self.screen = screen
         self.position = position
         self.color = color

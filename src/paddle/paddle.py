@@ -10,8 +10,7 @@ class Paddle(pygame.sprite.Sprite):
     up_key: int
     down_key: int
 
-    def __init__(self, screen: pygame.Surface, up_key: int, down_key: int, color: pygame.Color, position: list[int], grps: pygame.sprite.Group, dimensions: Tuple[int, int] = (20, 90), width: int = 0) -> None:
-        super().__init__(grps)
+    def __init__(self, screen: pygame.Surface, up_key: int, down_key: int, color: pygame.Color, position: list[int], dimensions: Tuple[int, int] = (20, 90), width: int = 0) -> None:
         self.screen = screen
         self.color = color
         self.position = position

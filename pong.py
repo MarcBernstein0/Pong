@@ -23,27 +23,23 @@ def main():
     fps = FPS()
     screen_color = pygame.Color("black")
     screen = makeScreen(screen_color, "PONG")
-    sprites = pygame.sprite.Group()
     paddle_left = Paddle(
         screen, 
         pygame.K_w, 
         pygame.K_s, 
         pygame.Color("white"), 
-        [PADDLE_SPACING, SCREEN_HEIGHT//2], 
-        sprites)
+        [PADDLE_SPACING, SCREEN_HEIGHT//2])
     paddle_right = Paddle(
         screen, 
         pygame.K_UP, 
         pygame.K_DOWN, 
         pygame.Color("white"),[
-        SCREEN_WIDTH - (PADDLE_SPACING + 20), int(SCREEN_HEIGHT//1.5)], 
-        sprites)
+        SCREEN_WIDTH - (PADDLE_SPACING + 20), int(SCREEN_HEIGHT//1.5)])
     ball = Ball(
         screen, 
         [SCREEN_HEIGHT//2, SCREEN_WIDTH//2], 
         pygame.Color("white"), 
-        15, 
-        sprites)
+        15)
 
     # Variable to keep our game loop running 
     running = True
@@ -58,7 +54,9 @@ def main():
         screen.fill(screen_color) # Clear the screen
         fps.clock.tick(180)
         fps.render(screen)
-        sprites.update()
+        paddle_left.update()
+        paddle_right.update()
+        ball.update()
         paddle_left.draw_paddle()
         paddle_right.draw_paddle()
         ball.draw_ball()
