@@ -44,3 +44,6 @@ class Paddle(pygame.sprite.Sprite):
         _, height = self.screen.get_size()
         if (not self.rect.bottom >= height):
             self.rect.move_ip(0, 1)
+    
+    # def is_collided_with(self, ball: Ball):
+    #     return self.rect.colliderect(ball.circle)

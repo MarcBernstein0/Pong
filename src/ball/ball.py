@@ -1,6 +1,8 @@
 from typing import Any, List, Tuple
 import pygame
 
+from src.paddle.paddle import Paddle
+
 
 class Ball(pygame.sprite.Sprite):
     screen: pygame.Surface
@@ -26,10 +28,10 @@ class Ball(pygame.sprite.Sprite):
     def draw_ball(self):
         pygame.draw.circle(self.screen, self.color, self.circle.center, self.radius)
     
-    def update(self):
+    def update(self, paddle_l: Paddle, paddle_r: Paddle):
         self.circle.move_ip(self.speed)
         width, height = self.screen.get_size()
-        if self.circle.left <= 0 or self.circle.right >= width:
+        if self.circle.left <= 0 or self.circle.right >= width or self.circle.colliderect(paddle_l.rect) or self.circle.colliderect(paddle_r.rect):
             self.speed[0] *= -1
         if self.circle.top <= 0 or self.circle.bottom >= height:
             self.speed[1] *= -1

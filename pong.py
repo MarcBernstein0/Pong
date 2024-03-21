@@ -1,10 +1,7 @@
 import pygame
 
-from src.ball.ball import Ball
-from src.fps.fps import FPS
-from src.paddle.paddle import Paddle
+from src.game_logic.game_logic import GameLogic
 
-PADDLE_SPACING = 20
 SCREEN_HEIGHT = 900
 SCREEN_WIDTH = 1080
 
@@ -16,55 +13,14 @@ def makeScreen(backgroundColor: pygame.Color, caption: str) -> pygame.Surface:
     pygame.display.flip() 
     return screen
 
-
-
 def main():
     pygame.init()
-    fps = FPS()
     screen_color = pygame.Color("black")
     screen = makeScreen(screen_color, "PONG")
-    paddle_left = Paddle(
-        screen, 
-        pygame.K_w, 
-        pygame.K_s, 
-        pygame.Color("white"), 
-        [PADDLE_SPACING, SCREEN_HEIGHT//2])
-    paddle_right = Paddle(
-        screen, 
-        pygame.K_UP, 
-        pygame.K_DOWN, 
-        pygame.Color("white"),[
-        SCREEN_WIDTH - (PADDLE_SPACING + 20), int(SCREEN_HEIGHT//1.5)])
-    ball = Ball(
-        screen, 
-        [SCREEN_HEIGHT//2, SCREEN_WIDTH//2], 
-        pygame.Color("white"), 
-        15)
+    game_logic = GameLogic(screen, screen_color)
+    game_logic.game_logic()
 
-    # Variable to keep our game loop running 
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            pressed = pygame.key.get_pressed()
-            if pressed[pygame.K_ESCAPE]:
-                running = False
-
-        screen.fill(screen_color) # Clear the screen
-        fps.clock.tick(180)
-        fps.render(screen)
-        paddle_left.update()
-        paddle_right.update()
-        ball.update()
-        paddle_left.draw_paddle()
-        paddle_right.draw_paddle()
-        ball.draw_ball()
-
-
-        pygame.display.update()
-
-    print("Quitting game")
+    
 
 
 if __name__ == "__main__":
