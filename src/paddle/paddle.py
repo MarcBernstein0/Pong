@@ -35,6 +35,9 @@ class Paddle(pygame.sprite.Sprite):
             self.__move_up()
         if pressed[self.down_key]:
             self.__move_down()
+    
+    def reset_pos(self, position: List[int]):
+        self.rect = pygame.draw.rect(self.screen, self.color, (position[0], position[1], self.dimensions[0], self.dimensions[1]))
 
     def __move_up(self):
         if (not self.rect.top <= 0):

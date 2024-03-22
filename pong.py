@@ -18,7 +18,7 @@ def main():
     screen_color = pygame.Color("black")
     screen = makeScreen(screen_color, "PONG")
     game_logic = GameLogic(screen, screen_color)
-    game_logic.game_logic()
+    game_logic.main_loop()
 
     
 
